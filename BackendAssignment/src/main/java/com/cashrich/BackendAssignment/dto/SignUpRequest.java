@@ -1,14 +1,17 @@
 package com.cashrich.BackendAssignment.dto;
 
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
 public class SignUpRequest {
-    @Pattern(regexp = "[A-Za-z0-9]{4,15}")
+    @NotBlank
+    @Pattern(regexp = "[A-Za-z0-9]{4,15}", message = "${username.validation}")
     private String username;
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,15}$")
+    @NotBlank
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,15}$", message = "${password.validation}")
     private String password;
     @Pattern(regexp = "[A-Za-z]*")
     private String firstName;

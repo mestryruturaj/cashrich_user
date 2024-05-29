@@ -1,11 +1,19 @@
 package com.cashrich.BackendAssignment.service;
 
 import com.cashrich.BackendAssignment.Entity.User;
+import com.cashrich.BackendAssignment.Entity.UserActivity;
 import com.cashrich.BackendAssignment.dto.*;
+import com.cashrich.BackendAssignment.externalClient.CryptoAPI;
+import com.cashrich.BackendAssignment.repository.UserActivityRepository;
 import com.cashrich.BackendAssignment.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Optional;
 
 import static com.cashrich.BackendAssignment.constants.Constants.*;
@@ -13,11 +21,17 @@ import static com.cashrich.BackendAssignment.constants.Constants.*;
 @Service
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
+    private UserActivityRepository userActivityRepository;
+    private CryptoAPI cryptoAPI;
+
 
     private User cachedUser;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, CryptoAPI cryptoAPI, UserActivityRepository userActivityRepository) {
         this.userRepository = userRepository;
+        this.cryptoAPI = cryptoAPI;
+        this.userActivityRepository = userActivityRepository;
     }
 
     @Override
@@ -119,5 +133,19 @@ public class UserServiceImpl implements UserService {
             cachedUser = null;
         }
         return USER_LOGGED_OUT_SUCCESSFUL;
+    }
+
+    @Override
+    public ResponseEntity<String> getCoins(Map<String, String> headers) {
+        if (cachedUser == null) {
+            return new ResponseEntity<>(USER_SHOULD_BE_LOGGED_IN, HttpStatus.BAD_REQUEST);
+        }
+        ResponseEntity<String> response = cryptoAPI.getCoins(headers);
+        UserActivity userActivity = new UserActivity();
+        userActivity.setUsername(cachedUser.getUsername());
+        userActivity.setResponse(String.valueOf(response.getStatusCode().value()));
+        userActivity.setTimestamp(Timestamp.valueOf(LocalDateTime.now()));
+        userActivityRepository.save(userActivity);
+        return response;
     }
 }

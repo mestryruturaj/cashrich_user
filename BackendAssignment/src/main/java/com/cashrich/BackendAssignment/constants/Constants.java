@@ -9,4 +9,5 @@ public class Constants {
     public static final String USER_UPDATE_SUCCESSFUL = "User is successfully updated with username ";
     public static final String USER_UPDATE_FAILED_NOT_LOGGED_IN = "User is not Logged in to update details.";
     public static final String USER_LOGGED_OUT_SUCCESSFUL = "User successfully logged out.";
+    public static final String USER_SHOULD_BE_LOGGED_IN = "User should be logged in to fetch corresponding coin details.";
 }

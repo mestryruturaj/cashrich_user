@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class UpdateRequest {
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,15}$")
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,15}$", message = "${password.validation}")
     private String password;
     @Pattern(regexp = "[A-Za-z]*")
     private String firstName;
