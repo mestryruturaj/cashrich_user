@@ -1,0 +1,18 @@
+create database cashrich_db;
+show databases;
+use cashrich_db;
+show tables;
+create table user(username varchar(15) primary key,
+password varchar(15) not null,
+firstname varchar(255),
+lastname varchar(255),
+email varchar(255) unique key,
+mobile varchar(10));
+show tables;
+desc user;
+
+select * from user;
+
+create table user_activity (id integer primary key auto_increment, username varchar(15), response varchar(3), activity_dttm Timestamp);
+alter table user_activity auto_increment = 1;
+select * from user_activity;
