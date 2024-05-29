@@ -5,9 +5,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 @Data
-public class SignUpRequest {
-    @Pattern(regexp = "[A-Za-z0-9]{4,15}")
-    private String username;
+public class UpdateRequest {
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,15}$")
     private String password;
     @Pattern(regexp = "[A-Za-z]*")

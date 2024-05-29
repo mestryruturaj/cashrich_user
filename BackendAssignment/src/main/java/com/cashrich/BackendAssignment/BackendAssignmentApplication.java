@@ -10,4 +10,12 @@ public class BackendAssignmentApplication {
 		SpringApplication.run(BackendAssignmentApplication.class, args);
 	}
 
+	//TODO
+	//Exception handling
+	//Controller Advice
+	//AOP
+	//Logging
+	//Spring security
+	//Log info table
+
 }

@@ -24,6 +24,9 @@ public class SignUpValidator {
         if (userByUsername.isPresent()) {
             throw new InvalidUserDetailsException(String.format("Desired username is not available and User profile with the username '%s' already exists.", signUpRequest.getUsername()));
         }
+        if (signUpRequest.getEmail() == null) {
+            return;
+        }
         Optional<User> userByEmail = userRepository.findByEmail(signUpRequest.getEmail());
         if (userByEmail.isPresent()) {
             throw new InvalidUserDetailsException(String.format("Entered email is not available and User profile with the email '%s' already exists.", signUpRequest.getEmail()));
